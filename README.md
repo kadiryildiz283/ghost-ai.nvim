@@ -1,38 +1,5 @@
 # ghost-ai.nvim
 
-<p align="center">
-  <img src="https://raw.githubusercontent.com/neovim/neovim.github.io/master/logos/neovim-logo-300x87.png" width="120" />
-</p>
-
-<h1 align="center">👻 ghost-ai.nvim</h1>
-
-<p align="center">
-  <strong>Zero Dependency • Pure Logic • Asynchronous AI Completion</strong>
-</p>
-
-<p align="center">
-  Lightweight AI autocomplete for Neovim with ghost-text rendering, smart overlap detection and dual-provider support (Ollama + MiniMax).
-</p>
-
-<p align="center">
-  <a href="https://github.com/kadiryildiz283/ghost-ai.nvim/stargazers">
-    <img src="https://img.shields.io/github/stars/kadiryildiz283/ghost-ai.nvim?style=for-the-badge&logo=starship&color=yellow" />
-  </a>
-  <a href="https://github.com/kadiryildiz283/ghost-ai.nvim/issues">
-    <img src="https://img.shields.io/github/issues/kadiryildiz283/ghost-ai.nvim?style=for-the-badge&logo=gitbook&color=red" />
-  </a>
-  <a href="https://github.com/kadiryildiz283/ghost-ai.nvim/blob/main/LICENSE">
-    <img src="https://img.shields.io/github/license/kadiryildiz283/ghost-ai.nvim?style=for-the-badge&logo=opensourceinitiative&color=blue" />
-  </a>
-</p>
-
-<p align="center">
-  <img src="https://img.shields.io/badge/Neovim-0.9+-57A143?style=for-the-badge&logo=neovim&logoColor=white" />
-  <img src="https://img.shields.io/badge/Lua-5.1-blue?style=for-the-badge&logo=lua&logoColor=white" />
-  <img src="https://img.shields.io/badge/Ollama-Ready-black?style=for-the-badge" />
-  <img src="https://img.shields.io/badge/MiniMax-Cloud-FF6B6B?style=for-the-badge" />
-</p>
-
 ---
 
 ## Overview
@@ -41,7 +8,7 @@
 
 Unlike many AI plugins that depend on large UI frameworks, external helper libraries, or complex completion stacks, `ghost-ai.nvim` focuses on a single goal:
 
-> Deliver fast, context-aware inline AI completions with minimal overhead.
+> Deliver fast, context-aware inline AI completions and smart file templates with minimal overhead.
 
 The plugin uses native Neovim APIs, asynchronous jobs, and ghost-text rendering to provide a smooth coding experience without blocking the editor.
 
@@ -49,16 +16,17 @@ The plugin uses native Neovim APIs, asynchronous jobs, and ghost-text rendering 
 
 ## Why ghost-ai.nvim?
 
-| Feature                 | Typical AI Plugins       | ghost-ai.nvim           |
-| ----------------------- | ------------------------ | ----------------------- |
-| Dependencies            | Multiple                 | Zero                    |
-| UI Frameworks           | Floating windows, popups | None                    |
-| Async Requests          | Mixed                    | Fully async             |
-| Local Models            | Sometimes                | Native Ollama           |
-| Cloud Models            | Limited                  | MiniMax                 |
-| Prefix Overlap Handling | Basic                    | Smart slicing           |
-| Context Awareness       | Cursor only              | File objective analysis |
-| Startup Cost            | Higher                   | Minimal                 |
+| Feature | Typical AI Plugins | ghost-ai.nvim |
+| --- | --- | --- |
+| Dependencies | Multiple | Zero |
+| UI Frameworks | Floating windows, popups | None |
+| Async Requests | Mixed | Fully async |
+| Local Models | Sometimes | Native Ollama |
+| Cloud Models | Limited | MiniMax |
+| Auto Templating | Rare / Prompt-based | Background on File Save |
+| Prefix Overlap Handling | Basic | Smart slicing |
+| Context Awareness | Cursor only | File objective analysis |
+| Startup Cost | Higher | Minimal |
 
 ### Design Philosophy
 
@@ -71,6 +39,16 @@ The plugin follows three principles:
 ---
 
 ## Features
+
+### 📝 Auto File Template Generation
+
+Start a new file, write a comment on the first line explaining what you want to build, and save the file (`:w`). `ghost-ai.nvim` will automatically generate a tailored blueprint for you in the background.
+
+* **Smart Heuristics:** Only triggers on new or nearly empty files (less than 5 lines of code). It knows not to mess with an already established codebase.
+* **Loop Prevention:** Checks for the `=== Ghost AI Helper Templates ===` marker. It will not endlessly request generations on repeated saves. If you delete the generated template block and save again, it will regenerate a fresh one.
+* **Universal Language Support:** Dynamically reads Neovim's native `vim.bo.commentstring` to automatically use the correct comment syntax (e.g., `--` for Lua, `#` for Python, `//` for C++, `` for HTML). The output is strictly wrapped in comments (max 50 lines) so your file remains perfectly runnable and error-free.
+
+---
 
 ### 👻 Ghost Text Rendering
 
@@ -92,18 +70,21 @@ Typed:
 
 ```cpp
 std::co
+
 ```
 
 Model returns:
 
 ```cpp
 std::cout << value;
+
 ```
 
 ghost-ai.nvim automatically transforms it into:
 
 ```cpp
 ut << value;
+
 ```
 
 Only the missing portion is inserted.
@@ -170,6 +151,8 @@ No secrets are stored inside configuration files.
 ```text
 Buffer
    │
+   ├──► [On Save / BufWritePost] ──► Auto Template Generator (Checks Heuristics & Marker)
+   │
    ▼
 Context Builder
    │
@@ -188,6 +171,7 @@ Overlap Detector
            │
            ▼
 Ghost Text Renderer
+
 ```
 
 ---
@@ -203,6 +187,7 @@ Ghost Text Renderer
         require("ghost_ai").setup()
     end,
 }
+
 ```
 
 ---
@@ -213,6 +198,7 @@ Add the plugin to:
 
 ```lua
 ~/.config/lvim/config.lua
+
 ```
 
 ```lua
@@ -224,18 +210,21 @@ lvim.plugins = {
         end,
     },
 }
+
 ```
 
 Reload LunarVim:
 
 ```vim
 :LvimSyncCorePlugins
+
 ```
 
 or
 
 ```vim
 :PackerSync
+
 ```
 
 depending on your LunarVim version.
@@ -267,6 +256,7 @@ ghost.config = {
 }
 
 ghost.setup()
+
 ```
 
 ---
@@ -279,6 +269,7 @@ Export your API key:
 
 ```bash
 export MINIMAX_API_KEY="your_api_key_here"
+
 ```
 
 ### Zsh
@@ -286,6 +277,7 @@ export MINIMAX_API_KEY="your_api_key_here"
 ```bash
 echo 'export MINIMAX_API_KEY="your_api_key_here"' >> ~/.zshrc
 source ~/.zshrc
+
 ```
 
 ---
@@ -297,24 +289,27 @@ Install and run Ollama:
 ```bash
 ollama pull qwen2.5-coder:1.5b
 ollama serve
+
 ```
 
 Verify:
 
 ```bash
 curl http://localhost:11434/api/tags
+
 ```
 
 ---
 
-## Keymaps
+## Keymaps & Triggers
 
-| Mode   | Key         | Description                |
-| ------ | ----------- | -------------------------- |
-| Normal | `<M-q>`     | Generate AI completion     |
-| Normal | `<Tab>`     | Accept suggestion          |
-| Any    | Cursor Move | Clear ghost text           |
-| Insert | Typing      | Refresh completion context |
+| Mode | Action | Description |
+| --- | --- | --- |
+| Normal | `<M-q>` | Generate inline AI code completion |
+| Normal | `<Tab>` | Accept ghost text suggestion |
+| Any | Cursor Move | Clear current ghost text |
+| Insert | Typing | Refresh completion context |
+| Event | `:w` | Trigger auto-template generation (only on files with <5 lines of code) |
 
 ---
 
@@ -366,8 +361,3 @@ Contributions, bug reports and feature requests are welcome.
 MIT License © 2026 Kadir Yıldız
 
 ---
-
-<p align="center">
-Built with ❤️ for the Neovim community.
-</p>
-
