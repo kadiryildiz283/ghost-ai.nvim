@@ -1,5 +1,42 @@
 # ghost-ai.nvim
 
+<p align="center">
+  <img src="https://raw.githubusercontent.com/neovim/neovim.github.io/master/logos/neovim-logo-300x87.png" width="120" />
+</p>
+
+<h1 align="center">👻 ghost-ai.nvim</h1>
+
+<p align="center">
+  <strong>Zero Dependency • Pure Logic • Asynchronous AI Completion</strong>
+</p>
+
+<p align="center">
+  Lightweight AI autocomplete for Neovim with ghost-text rendering, smart overlap detection and dual-provider support (Ollama + MiniMax).
+</p>
+
+<p align="center">
+  <a href="https://github.com/kadiryildiz283/ghost-ai.nvim/stargazers">
+    <img src="https://img.shields.io/github/stars/kadiryildiz283/ghost-ai.nvim?style=for-the-badge&logo=starship&color=yellow" />
+  </a>
+  <a href="https://github.com/kadiryildiz283/ghost-ai.nvim/issues">
+    <img src="https://img.shields.io/github/issues/kadiryildiz283/ghost-ai.nvim?style=for-the-badge&logo=gitbook&color=red" />
+  </a>
+  <a href="https://github.com/kadiryildiz283/ghost-ai.nvim/blob/main/LICENSE">
+    <img src="https://img.shields.io/github/license/kadiryildiz283/ghost-ai.nvim?style=for-the-badge&logo=opensourceinitiative&color=blue" />
+  </a>
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Neovim-0.9+-57A143?style=for-the-badge&logo=neovim&logoColor=white" />
+  <img src="https://img.shields.io/badge/Lua-5.1-blue?style=for-the-badge&logo=lua&logoColor=white" />
+  <img src="https://img.shields.io/badge/Ollama-Ready-black?style=for-the-badge" />
+  <img src="https://img.shields.io/badge/MiniMax-Cloud-FF6B6B?style=for-the-badge" />
+</p>
+
+---
+
+# ghost-ai.nvim
+
 ---
 
 ## Overview
