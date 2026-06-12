@@ -1,9 +1,4 @@
 # ghost-ai.nvim
-
-<p align="center">
-  <img src="https://raw.githubusercontent.com/neovim/neovim.github.io/master/logos/neovim-logo-300x87.png" width="120" />
-</p>
-
 <h1 align="center">👻 ghost-ai.nvim</h1>
 
 <p align="center">
